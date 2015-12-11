@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="all" default="package" basedir=".">
+	<path id="cp">
+		<pathelement location="." />
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<target name="clean">
+		<delete dir="${basedir}/build" />
+	</target>
+	<target name="prepare" depends="clean">
+		<mkdir dir="${basedir}/build/All_In_One" />
+		<mkdir dir="${basedir}/build/All_In_One/lib" />
+		<mkdir dir="${basedir}/build/All_In_One/bin" />
+		<mkdir dir="${basedir}/build/All_In_One/src" />
+		<mkdir dir="${basedir}/build/All_In_One/classes" />
+		<mkdir dir="${basedir}/build/All_In_One/configs" />
+		<mkdir dir="${basedir}/build/All_In_One/DB_Scripts" />
+		<mkdir dir="${basedir}/build/All_In_One/webapp" />
+		<mkdir dir="${basedir}/build/All_In_One/webapp/Console" />
+	</target>
+	<target name="copyto" depends="prepare">
+		<copy todir="${basedir}/build/All_In_One/lib">
+			<fileset dir="${basedir}/lib" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/DB_Scripts">
+			<fileset dir="${basedir}/DB_Scripts" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/configs">
+			<fileset dir="${basedir}/Console/configs" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/configs">
+			<fileset dir="${basedir}/Node/configs" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/bin">
+			<fileset dir="${basedir}/Console/bin" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/bin">
+			<fileset dir="${basedir}/Node/bin" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/webapp/Console">
+			<fileset dir="${basedir}/Console/WebRoot" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="package" depends="copyto">
+		<copy todir="${basedir}/build/All_In_One/src">
+			<fileset dir="${basedir}/Common/src" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/src">
+			<fileset dir="${basedir}/Console/src" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<copy todir="${basedir}/build/All_In_One/src">
+			<fileset dir="${basedir}/Node/src" excludes="**/.svn/**/*.*">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<javac srcdir="${basedir}/build/All_In_One/src" destdir="${basedir}/build/All_In_One/classes" encoding="utf8" deprecation="off" failonerror="false" fork="false" memoryMaximumSize="512m" debug="on" nowarn="on">
+			<classpath refid="cp" />
+		</javac>
+		<jar destfile="${basedir}/build/All_In_One/lib/storage.jar">
+			<fileset dir="${basedir}/build/All_In_One/classes" />
+		</jar>
+		<jar destfile="${basedir}/build/All_In_One/lib/startup.jar">
+			<fileset dir="${basedir}/build/All_In_One/classes" includes="**/main/Start.class" />
+		</jar>
+		<delete dir="${basedir}/build/All_In_One/classes" />
+		<delete dir="${basedir}/build/All_In_One/src" />
+	</target>
+</project>

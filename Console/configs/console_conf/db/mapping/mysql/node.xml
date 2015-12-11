@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "ibatis-3-mapper.dtd">
+    
+<mapper namespace="node">
+    <resultMap id="nodeMap" type="node">
+    	<result column="ID" property="id" javaType="java.lang.Long"/>
+        <result column="NAME" property="name" javaType="java.lang.String"/>
+        <result column="IP" property="ip" javaType="java.lang.String"/>
+        <result column="ISOLATED" property="isolated" javaType="java.lang.Boolean"/>
+        <result column="STATUS" property="status" javaType="java.lang.Boolean"/>
+        <result column="STORAGE_ROOT" property="storageRoot" javaType="java.lang.String"/>
+        <result column="TRANSFER_PORTS" property="transferPorts" javaType="java.lang.String"/>
+    </resultMap>
+
+	<insert id="save" parameterType="node">
+		insert into node_info (name, ip, isolated, status, storage_root) values (#{name}, #{ip}, #{isolated}, #{status}, #{storageRoot})
+		<selectKey resultType="long" keyProperty="id">
+			select LAST_INSERT_ID()	
+		</selectKey>
+	</insert>
+	
+	<select id="findById" resultMap="nodeMap">
+		select * from node_info where id=#{value}
+	</select>
+	
+	<select id="findAll" resultMap="nodeMap">
+		select * from node_info
+	</select>
+	
+	<select id="findFileNodes" resultMap="nodeMap">
+		select * from node_info n, file_node f where n.id=f.node_id and f.file_id=#{value}
+	</select>
+	
+	<select id="findAllRunning" resultMap="nodeMap">
+		select * from node_info where status=1
+	</select>
+	
+	<select id="delete">
+		delete from node_info where id=#{value}
+	</select>
+	
+	<update id="updateTransferPorts" parameterType="node">
+		update node_info
+		set transfer_ports=#{transferPorts}
+		where id=#{id}
+	</update>
+	
+	<update id="updateStatus" parameterType="node">
+		update node_info
+		set status=#{status}
+		where id=#{id}
+	</update>
+</mapper>

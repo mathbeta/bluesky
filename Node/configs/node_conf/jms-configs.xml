@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configs xmlns="http://storage.dc.com/config">
+	<selector>test</selector>
+	<config name="test.foo">
+		<brokerURL>tcp://127.0.0.1:61616</brokerURL>
+		<inbox>test.foo.in</inbox>
+		<outbox>test.foo.out</outbox>
+		<selected>true</selected>
+		<transacted>true</transacted>
+		<receiver>com.dc.test.activemq.MyReceiver</receiver>
+	</config>
+</configs>

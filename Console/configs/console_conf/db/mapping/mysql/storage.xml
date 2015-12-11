@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "ibatis-3-mapper.dtd">
+    
+<mapper namespace="storage">
+    <resultMap id="dataFileMap" type="dataFile">
+    	<result column="id" property="id" javaType="java.lang.Long"/>
+        <result column="file_name" property="name" javaType="java.lang.String"/>
+        <result column="is_dir" property="isDir" javaType="java.lang.Boolean"/>
+        <result column="parent_id" property="parentId" javaType="java.lang.Long"/>
+    </resultMap>
+
+	<insert id="save" parameterType="java.util.Map">
+		insert into file_info (file_name, length, user_id, description, original_name, is_dir, parent_id, created_time)
+		values (#{fileName}, #{length},	#{userId}, #{description}, #{originalName}, 0, #{parentId}, now())
+		<selectKey resultType="long" keyProperty="id">
+			select LAST_INSERT_ID()	
+		</selectKey>
+	</insert>
+	
+	<insert id="saveFileNode" parameterType="java.util.Map">
+		insert into file_node (file_id, node_id) values (#{fileId}, #{nodeId})
+	</insert>
+	
+	<update id="updateReplCount" parameterType="java.util.Map">
+		update file_info
+		set repl_count=#{replCount}
+		where id=#{id}
+	</update>
+	
+	<select id="getConsoleUrls" resultType="java.lang.String">
+		select c.url from console_info c
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="dataFileMap">
+		select * from file_info t where t.user_id=#{userId} and t.parent_id=#{parentId} order by t.created_time desc
+	</select>
+	
+	<select id="getUserRootId" resultType="java.lang.Long">
+		select t.id from file_info t where t.user_id=#{value} and t.parent_id=-1 and t.is_dir='1'
+	</select>
+	
+	<select id="getPathId" parameterType="java.util.Map" resultType="java.lang.Long">
+		select t.id from file_info t where t.user_id=#{userId} and t.file_name=#{fileName}
+		<if test="isDir!=null">
+			and t.is_dir=#{isDir}
+		</if>
+		<if test="parentId!=null">
+			and t.parent_id=#{parentId}
+		</if>
+	</select>
+	
+	<insert id="saveDir" parameterType="java.util.Map">
+		insert into file_info (file_name, user_id, is_dir, parent_id, created_time)
+		values (#{fileName}, #{userId}, 1, #{parentId}, now())
+	</insert>
+	
+	<delete id="delete">
+		delete from file_info where id=#{value}
+	</delete>
+	
+	<select id="getFileInfo" resultType="java.util.HashMap">
+		select * from file_info where id=#{value}
+	</select>
+	
+	<delete id="deleteFileNode" parameterType="java.util.Map">
+		delete from file_node where file_id=#{fileId} and node_id=#{nodeId}
+	</delete>
+	
+	<select id="getFileNodes" resultType="java.lang.String">
+		select node_id from file_node where file_id=#{value}
+	</select>
+</mapper>

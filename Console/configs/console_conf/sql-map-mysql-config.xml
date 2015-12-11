@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" "ibatis-3-config.dtd">
+
+<configuration>
+	
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="cacheEnabled" value="true"/>
+	</settings>
+		
+	<typeAliases>
+		<typeAlias alias="node" type="com.dc.storage.console.bean.Node" />
+		<typeAlias alias="dataFile" type="com.dc.storage.console.bean.DataFile" />
+		<typeAlias alias="user" type="com.dc.storage.console.bean.User" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="db/mapping/mysql/storage.xml"/>
+		<mapper resource="db/mapping/mysql/user.xml"/>
+		<mapper resource="db/mapping/mysql/node.xml"/>
+	</mappers> 
+	
+</configuration>
