@@ -9,9 +9,9 @@
 	</settings>
 		
 	<typeAliases>
-		<typeAlias alias="node" type="com.dc.storage.console.bean.Node" />
-		<typeAlias alias="dataFile" type="com.dc.storage.console.bean.DataFile" />
-		<typeAlias alias="user" type="com.dc.storage.console.bean.User" />
+		<typeAlias alias="node" type="com.mathbeta.storage.console.bean.Node" />
+		<typeAlias alias="dataFile" type="com.mathbeta.storage.console.bean.DataFile" />
+		<typeAlias alias="user" type="com.mathbeta.storage.console.bean.User" />
 	</typeAliases>
 	
 	<mappers>

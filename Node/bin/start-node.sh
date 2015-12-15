@@ -20,4 +20,4 @@ export DEBUG_PORT
 JAVA_DEBUG="-Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=${DEBUG_PORT},server=y,suspend=n"
 export JAVA_DEBUG
  
-${JAVA_HOME}/bin/java ${JAVA_OPTIONS} ${JAVA_DEBUG} -Dstorage.classpath=../lib com.dc.storage.main.Start node
+${JAVA_HOME}/bin/java ${JAVA_OPTIONS} ${JAVA_DEBUG} -Dstorage.classpath=../lib com.mathbeta.storage.main.Start node

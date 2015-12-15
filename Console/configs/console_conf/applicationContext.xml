@@ -94,12 +94,12 @@
 	<!-- 配置切面 -->
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="servicePointcut"
-			expression="execution(* com.dc.storage.console.service.impl.*.*(..))" />
+			expression="execution(* com.mathbeta.storage.console.service.impl.*.*(..))" />
 		<aop:advisor pointcut-ref="servicePointcut" advice-ref="serviceAdvice" />
 	</aop:config>
 
 	<context:component-scan
-		base-package="com.dc.storage.console.service.impl,
-		com.dc.storage.console.dao.impl" />
+		base-package="com.mathbeta.storage.console.service.impl,
+		com.mathbeta.storage.console.dao.impl" />
 
 </beans>
